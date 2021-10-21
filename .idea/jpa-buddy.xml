@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="liquibaseDirectory" value="db/changelog" />
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="isSnapshotDb" value="false" />
+    <option name="snapshotModelValue" value="Default" />
+    <option name="snapshotDirValue" value="$PROJECT_DIR$/billing/src/main/java/ru/nl/billing/repository" />
+  </component>
+</project>
