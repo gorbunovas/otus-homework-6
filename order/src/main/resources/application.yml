@@ -1,0 +1,31 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URI:jdbc:postgresql://localhost:5432/order?currentSchema=public}
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:123}
+#    url: jdbc:h2:mem:testdb
+#    driverClassName: org.h2.Driver
+#    username: sa
+#    password: sa
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+
+management:
+  port: 80
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+billingservice:
+  name: ${BILLING_SERVER:http://localhost:8002}
+  user: ${BILLING_SERVER_USER:/billing/user}
+  withdraw: ${BILLING_SERVER_WITHDRAW:/billing/withdraw}
+
+notificationservice:
+  name: ${NOTIFICATION_SERVER:http://localhost:8003}

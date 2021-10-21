@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hw-order.fullname" . }}
+  labels:
+    {{- include "hw-order.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "hw-order.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "hw-order.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "hw-order.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 80
+            initialDelaySeconds: 45
+            periodSeconds: 50
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 30
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: DB_PASSWORD
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: DB_USER
+            - name: DB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: DB_URI
+            - name: DB_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: DB_SCHEMA
+            - name: BILLING_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: BILLING_SERVER
+            - name: BILLING_SERVER_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: BILLING_SERVER_USER
+            - name: BILLING_SERVER_WITHDRAW
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: BILLING_SERVER_WITHDRAW
+            - name: NOTIFICATION_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: NOTIFICATION_SERVER
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

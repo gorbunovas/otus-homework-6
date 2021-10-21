@@ -1,0 +1,149 @@
+asyncapi: 2.0.0
+info:
+  title: Homework 6
+  version: '1.0.2'
+defaultContentType: application/json
+
+channels:
+  orders:
+    description: Topic c заказами.
+    publish:
+      message:
+        $ref: '#/components/messages/OrderCreateRequested'
+    subscribe:
+      message:
+        $ref: '#/components/messages/OrderCreated'
+  billing:
+    description: Topic c информацией о балансе пользователя.
+    publish:
+      message:
+        $ref: '#/components/messages/DepositRequested'
+    subscribe:
+      message:
+        $ref: '#/components/messages/DepositProcessed'
+components:
+  messages:
+    OrderCreateRequested:
+      name: OrderCreated
+      title: Запрос на создание заказа.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/OrderCreateRequested"
+    OrderCreated:
+      name: OrderCreated
+      title: Запрос на создание заказа обработан.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/OrderCreated"
+    DepositRequested:
+      name: DepositRequested
+      title: Запрос на зачисление средств на счет пользователя.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/DepositRequested"
+    DepositProcessed:
+      name: DepositProcessed
+      title: Запрос на зачисление средств на счет пользователя обработан.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/DepositProcessed"
+    WithdrawnRequested:
+      name: WithdrawalRequested
+      title: Запрос на списание средств пользователя.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/WithdrawnRequested"
+    OrderPaided:
+      name: WithdrawalProcessed
+      title: Запрос на списание средств пользователя обработан.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/OrderPaided"
+  schemas:
+    Account:
+      type: object
+      required:
+        - amount
+      properties:
+        amount:
+          type: string
+          description: Сумма на счёте.
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    OrderCreateRequested:
+      type: object
+      required:
+        - userId
+        - price
+      properties:
+        userId:
+          type: integer
+          format: int64
+        price:
+          $ref: "#/components/schemas/Account"
+          description: Цена заказа.
+    OrderCreated:
+      type: object
+      required:
+        - orderId
+      properties:
+        orderId:
+          type: integer
+          format: int64
+    DepositRequested:
+      type: object
+      required:
+        - userId
+        - moneyAmount
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя.
+        price:
+          $ref: "#/components/schemas/Account"
+          description: Сумма для зачисления на аккаут пользователя.
+    DepositProcessed:
+      type: object
+      required:
+        - userId
+        - error
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: Идентификатор пользователя.
+        error:
+          $ref: "#/components/schemas/Error"
+          description: Код ошибки.
+    WithdrawnRequested:
+      type: object
+      required:
+        - orderId
+      properties:
+        orderId:
+          type: integer
+          format: int64
+          description: Идентификатор заказа.
+    OrderPaided:
+      type: object
+      required:
+        - orderId
+        - error
+      properties:
+        orderId:
+          type: integer
+          format: int64
+          description: Идентификатор заказа.
+        error:
+          $ref: "#/components/schemas/Error"
+          description: Код ошибки.
