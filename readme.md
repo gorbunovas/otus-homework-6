@@ -25,9 +25,9 @@
 Главный минус подхода - его надёжность, так как если упадёт один сервис, то вся система будет недоступна. Что бы повысить надёжность, нужно внедрять стратегии обработки ошибок либо внутри сервисов, либо средствами service-mash
 
 # Установка
-Выполнить команда в директории charts:
-helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml
-helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml
-helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml
+Выполнить команда в директории charts:\
+helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml \
+helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml \
+helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml \
 
 Тесты postman находятся в директории tests
