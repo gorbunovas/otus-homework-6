@@ -15,6 +15,7 @@ import ru.nl.order.model.User;
 import ru.nl.order.repository.OrderRepository;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -41,8 +42,12 @@ public class OrderService {
         return repository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
-    public Order CreateOrder(Long userId, Integer price){
-        var order = new Order(null, price, "CREATE", userId);
+    public Order CreateOrder(Long userId, Integer price, UUID idempotencyKey){
+        var order = new Order(null, price, "CREATE", userId, idempotencyKey);
+        if(repository.findByIdempotency(idempotencyKey).isPresent())  {
+            order.setStatus("EXISTS");
+            return order;
+        }
         repository.save(order);
         var usr = GetUser(userId);
         SendNotification(userId, usr.getEmail(), "Заказ N" + order.getId(), Withdraw(userId, order));

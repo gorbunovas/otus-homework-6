@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Table(name = "orders")
 @Data
@@ -23,4 +24,6 @@ public class Order {
     private String status;
     @Column(name = "user_id", nullable = false)
     private Long userId;
+    @Column(name = "idempotencyKey")
+    private UUID idempotencyKey;
 }

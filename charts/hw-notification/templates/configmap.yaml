@@ -7,3 +7,4 @@ data:
   DB_USER: {{ .Values.postgresql.postgresqlUsername }}
   DB_PASSWORD: {{ .Values.postgresql.postgresqlPassword }}
   DB_SCHEMA: {{ .Values.postgresql.postgresqlSchema }}
+  SERVICE_PORT: "{{.Values.containerPort}}"

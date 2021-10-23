@@ -72,7 +72,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "hw-billing.fullname" . }}
                   key: DB_SCHEMA
-
+            - name: SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-billing.fullname" . }}
+                  key: SERVICE_PORT
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

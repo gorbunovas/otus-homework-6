@@ -97,9 +97,9 @@ servicemonitor:
   enabled: false
 
 billingservice:
-  name: http://billing-hw-billing.default.svc.cluster.local:8002
-  user: /billing/user
-  withdraw: /billing/withdraw
+  name: "http://billing-hw-billing.default.svc.cluster.local:8002"
+  user: "/billing/user"
+  withdraw: "/billing/withdraw"
 
 notificationservice:
-  name: http://notification-hw-notification.default.svc.cluster.local:8003
+  name: "http://notification-hw-notification.default.svc.cluster.local:8003"

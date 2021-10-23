@@ -72,6 +72,11 @@ spec:
               configMapKeyRef:
                 name: {{ include "hw-notification.fullname" . }}
                 key: DB_SCHEMA
+          - name: SERVICE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "hw-notification.fullname" . }}
+                key: SERVICE_PORT
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

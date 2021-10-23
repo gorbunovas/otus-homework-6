@@ -53,6 +53,7 @@ spec:
                               create table orders (
                                       id bigint not null constraint users_pkey primary key,
                                       price int,
+                                      idempotency_key uuid not null UNIQUE,
                                       status varchar(1024),
                                       user_id bigint
                                     );

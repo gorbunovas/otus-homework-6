@@ -92,6 +92,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "hw-order.fullname" . }}
                   key: NOTIFICATION_SERVER
+            - name: SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "hw-order.fullname" . }}
+                  key: SERVICE_PORT
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: ${SERVICE_PORT:8002}
 
 spring:
   datasource:
@@ -16,16 +16,15 @@ spring:
 #      ddl-auto: update
 
 management:
-  port: 80
   endpoint:
     health:
       probes:
         enabled: true
 
 billingservice:
-  name: ${BILLING_SERVER:http://localhost:8002}
+  name: ${BILLING_SERVER:http://localhost:8003}
   user: ${BILLING_SERVER_USER:/billing/user}
   withdraw: ${BILLING_SERVER_WITHDRAW:/billing/withdraw}
 
 notificationservice:
-  name: ${NOTIFICATION_SERVER:http://localhost:8003}
+  name: ${NOTIFICATION_SERVER:http://localhost:8001}
