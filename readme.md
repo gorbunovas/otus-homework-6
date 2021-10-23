@@ -2,6 +2,14 @@
 Идемпотентность в сервисе Заказ реализована с помощью уникального заголовка Idempotency-Key. 
 Клиент пользователя создает ключ запроса и пересылает его вместе с запросом создания заказа на сервер, если запрос с таким ключем уже приходил, клиенту возвращается ошибка 409, если запрос новый, то клиенту возвращается идентификатор заказа.   
 
+# Установка
+Выполнить команда в директории charts:
+helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml
+helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml
+helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml
+
+Тесты postman находятся в директории tests/Hw7
+
 # REST
 
 [Описание REST интерфейса](/api/rest/restful.yaml)
@@ -28,10 +36,4 @@
 
 Главный минус подхода - его надёжность, так как если упадёт один сервис, то вся система будет недоступна. Что бы повысить надёжность, нужно внедрять стратегии обработки ошибок либо внутри сервисов, либо средствами service-mash
 
-# Установка
-Выполнить команда в директории charts:
-helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml
-helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml
-helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml
 
-Тесты postman находятся в директории tests/Hw7
