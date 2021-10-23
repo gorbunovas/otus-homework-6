@@ -3,7 +3,7 @@
 Клиент пользователя создает ключ запроса и пересылает его вместе с запросом создания заказа на сервер, если запрос с таким ключем уже приходил, клиенту возвращается ошибка 409, если запрос новый, то клиенту возвращается идентификатор заказа.   
 
 # Установка
-Выполнить команда в директории charts:
+Выполнить команда в директории charts: \
 helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml \
 helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml \
 helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml 
