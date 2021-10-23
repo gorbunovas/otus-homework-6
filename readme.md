@@ -4,9 +4,9 @@
 
 # Установка
 Выполнить команда в директории charts:
-helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml
-helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml
-helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml
+helm upgrade --install billing .\hw-billing\ -f .\hw-billing\values.yaml \
+helm upgrade --install notification .\hw-notification\ -f .\hw-notification\values.yaml \
+helm upgrade --install order .\hw-order\ -f .\hw-order\values.yaml \
 
 Тесты postman находятся в директории tests/Hw7
 
